@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, PanelLeftClose } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import SidebarTopBar, { SidebarTab } from "./sidebar-top-bar";
+import DocumentsView from "./documents-view";
+import HistoryView from "./history-view";
+import ExtensionsView from "./extensions-view";
 
 export interface SidebarProps {
   open: boolean;
@@ -35,6 +39,7 @@ const collapsedTabVariants = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
+  const [activeTab, setActiveTab] = useState<SidebarTab>('documents');
   return (
     <>
       <AnimatePresence>
@@ -65,37 +70,24 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             className={`fixed top-0 left-0 bottom-0 w-64 bg-background shadow-xl rounded-r-lg flex flex-col z-40 border-r border-border`}
             // Removed: transition-all duration-300 ease-in-out (handled by framer-motion)
           >
-            <div className="flex justify-between items-center p-2 border-b">
-              <span className="px-2 text-sm font-medium text-foreground">
-                Files
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setOpen(false)}
-                aria-label="Collapse sidebar"
-              >
-                <PanelLeftClose size={20} />
-              </Button>
-            </div>
-            <div className="p-2 space-y-1 flex-grow overflow-y-auto">
-              {[
-                "README.md",
-                "index.js",
-                "App.tsx",
-                "utils.ts",
-                "config.json",
-              ].map((file) => (
-                <div key={file}>
-                  <Button
-                    variant="ghost"
-                    className="w-full text-left justify-start px-2 py-1.5 text-sm text-foreground hover:text-accent hover:bg-accent/10 rounded-md truncate"
-                    title={file}
-                  >
-                    {file}
-                  </Button>
-                </div>
-              ))}
+                        <div className="flex flex-col h-full overflow-hidden">
+              <div className="flex justify-between items-center p-1 pr-2 border-b">
+                <SidebarTopBar activeTab={activeTab} setActiveTab={setActiveTab} />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setOpen(false)}
+                  aria-label="Collapse sidebar"
+                  className="ml-auto h-9 w-9"
+                >
+                  <PanelLeftClose size={20} />
+                </Button>
+              </div>
+              <div className="flex-grow overflow-y-auto">
+                {activeTab === 'documents' && <DocumentsView />}
+                {activeTab === 'history' && <HistoryView />}
+                {activeTab === 'extensions' && <ExtensionsView />}
+              </div>
             </div>
           </motion.div>
         )}

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Sidebar from "@/components/side-bar";
+import Sidebar from "@/components/sidebar";
 import MainToolbar from "@/components/main-toolbar";
 import LexicalEditor from "@/components/lexical-editor";
 
