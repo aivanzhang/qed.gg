@@ -1,2 +1,1 @@
-# qed.gg
-Simple but powerful AI notetaking app
+- Clean edit blank slate notebook. Left panel for easy access to files. Right panel for GitHub. Regex copy and paste. Top bar for edits
